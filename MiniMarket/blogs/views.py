@@ -17,6 +17,19 @@ def home(request):
 
 # TODO detail, search
 
+class DetailView(View):
+    """
+    Detail page of a record
+    """
+    template = 'blogs/detail.html'
+
+    def get(self, request, record_id=None):
+        if record_id is None:
+            return HttpResponseNotFound()
+
+
+
+@classmethod(login_required(login_url='/accounts/login'), method='dispatch')
 class AllRecordView(View):
     """
     List all records
