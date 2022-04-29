@@ -1,0 +1,97 @@
+{% extends "blogs/base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<!-- this form is for submitting the change information -->
+{% load static %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-2">
+            <img id="showimg" src="{% static 'bookmarket/97657145_p0.png' %}" class="img-fluid img-thumbnail full-width">
+        </div>
+    </div>
+</div>
+<form action="{% url 'accounts:userinfo' %}" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-sm-4">属性</th>
+                        <th class="col-sm-4">信息</th>
+                        <th class="col-sm-4">编辑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">账户</td>
+                        <td>{{ user.username }}</td>
+                        <td>
+                            <div class="input_field">
+                                <input type="text" name="nickname" value="账户不可修改" disabled > 
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">昵称</td>
+                        <td>{{ user.nickname }}</td>
+                        <td>
+                            <input type="text" name="nickname" value="{{ user.nickname }}" class="input_field"> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">楼号</td>
+                        <td>{{ user.building_no }}</td>
+                        <td>
+                            <input type="text" name="building_no" value="{{ user.building_no }}" class="input_field">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">寝室号</td>
+                        <td>{{ user.room_no }}</td>
+                        <td>
+                            <input type="text" name="room_no" value="{{ user.room_no }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">联系方式</td>
+                        <td>{{ user.contact }}</td>
+                        <td>
+                            <input type="text" name="contact" value="{{ user.contact }}" style="height=40px;">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-2">
+                <input type="submit" value="修改" class="button2">
+            </div>
+        </div>
+    </div>
+</form>
+{% endif %}
+{% endblock content %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        var round_image_width = $("#showimg").width();
+        var round_image_height = $("#showimg").height();
+
+        if (round_image_height > round_image_width) {
+            $("#showimg").css('height', round_image_width);
+            $("#showimg").css('width', round_image_width);
+            $("#showimg").css('object-fit', 'cover');
+            // right top is the (0,0)
+            $("#showimg").css('object-position', '0 0');
+        } else {
+            $("#showimg").css('width', round_image_height);
+            $("#showimg").css('height', round_image_height);
+            $("#showimg").css('object-fit', 'cover');
+        }
+    });
+</script>
+{% endblock script %}

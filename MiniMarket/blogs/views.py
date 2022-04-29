@@ -29,7 +29,7 @@ class DetailView(View):
 
 
 
-@classmethod(login_required(login_url='/accounts/login'), method='dispatch')
+@method_decorator(login_required(login_url='/accounts/login'),name="dispatch")
 class AllRecordView(View):
     """
     List all records

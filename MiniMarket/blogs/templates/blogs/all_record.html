@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-{% extends 'blogs/base.html' %}
-{% block content %}
-<div class="row">
-    <div class="col">
-        <a class="btn btn-outline-success btn-block" href="{% url 'blogs:new_want' %}" style="width:50%;">我想要</a>
-    </div>
-    <div class="col">
-        <a class="btn btn-outline-info btn-block" href="{% url 'blogs:new_offer' %}" style="width:50%">我能出</a>
-    </div>
-</div>
-<table class="table">
-    <thead>
-        <tr>
-          <th scope="col">WANT</th>
-          <th scope="col">OFFER</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for record in record_list %}
-        <tr style="vertical-align: middle;">
-            <td>{{ record.want }}</td>
-            <td>{{ record.offer }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-=======
 {% extends 'blogs/base.html' %}
 {% block content %}
 
@@ -76,5 +47,4 @@
     </div>
 </div>
 
->>>>>>> 9b2841e38c8b569a70ee38ab065b125e5182fe29
 {% endblock content %}

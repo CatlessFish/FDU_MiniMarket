@@ -84,3 +84,37 @@ class RegisterViewClass(View):
             return '/'
         else:
             return str(next)
+
+class UserinfoViewClass(View):
+    template = 'accounts/userinfo.html'
+    redirect_authenticated_user = True
+
+    def get(self, request):
+        user = request.user
+        form = UserChangeForm(instance=user)
+        print(form)
+        next = request.GET.get("next")
+        return render(request, self.template, {'form': form, 'next': next})
+
+    def post(self, request):
+        user = request.user
+        form = UserChangeForm(instance=user,data=request.POST)
+        print(user)
+        next = form.data.get('next')
+        if next == '':
+            next = None
+        if form.is_valid():
+            print(user)
+            form.save()
+            return redirect(self.get_redirect_url(next))
+        else:
+            errors = {name:list(form.errors[name]) for name in form.errors}
+            return render(request, self.template,
+                context={'form': form, 'error_msg': 'Invalid input', 'errors': errors})
+
+
+    def get_redirect_url(self, next=None) -> str: 
+        if next == 'None' or next is None:
+            return '/'
+        else:
+            return str(next)
