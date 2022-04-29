@@ -15,8 +15,6 @@ from .forms import *
 def home(request):
     return render(request, 'blogs/home.html')
 
-# TODO detail, search
-
 class DetailView(View):
     """
     Detail page of a record
@@ -26,10 +24,17 @@ class DetailView(View):
     def get(self, request, record_id=None):
         if record_id is None:
             return HttpResponseNotFound()
+        record = Record.objects.get(id=record_id)
+        # comments = ...
+        return render(request, template,
+            context={'record': record})
+
+    def post(self, request, record_id=None):
+        ...
 
 
 
-@method_decorator(login_required(login_url='/accounts/login'),name="dispatch")
+@method_decorator(login_required(login_url='/accounts/login'), name='dispatch')
 class AllRecordView(View):
     """
     List all records
@@ -37,11 +42,15 @@ class AllRecordView(View):
     template = 'blogs/all_record.html'
 
     def get(self, request):
-        all_list = Record.objects.all()
-        print(all_list)
-        selected_list = list(all_list)
+        srch = request.GET.get('search')
+        if srch == '' or srch is None:
+            want_list = list(Record.objects.filter(is_want=True))
+            offer_list = list(Record.objects.filter(is_want=False))
+        else:
+            want_list = list(Record.objects.filter(is_want=True, want__icontains=srch))
+            offer_list = list(Record.objects.filter(is_want=False, offer__icontains=srch))
         return render(request, self.template,
-            context={'record_list': selected_list})
+            context={'want_list': want_list, 'offer_list': offer_list})
 
     def post(self, request):
         ...

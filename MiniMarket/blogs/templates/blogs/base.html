@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load bootstrap4 %}
 <!doctype html>
 <html lang="en">
@@ -65,3 +66,72 @@
 </body>
 
 
+=======
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Minimarket</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <link rel="stylesheet" href="/static/css/navbar.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul class="nav__links">
+                <li>
+                    <a href="{% url 'blogs:home' %}" style="text-decoration: none; color: black;font-family: 'ZCOOL KuaiLe', cursive;" ><strong>Minimarket</strong>|FDu</a>
+                </li>
+                <li>
+                    <a href="{% url 'blogs:all_record' %}" style="text-decoration: none;">交易区</a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav>
+            <ul class="nav__links">
+            {% if user.is_authenticated %}
+                <li class="logo">
+                    <a href="#" style="text-decoration: none;">你好，{{ user.nickname }}. &emsp;</a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:logout' %}" style="text-decoration: none;">注销</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'accounts:login' %}" style="text-decoration: none;">登录</a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:register' %}" style="text-decoration: none;">注册</a>
+                </li>
+            {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+
+    {% block content %}
+    {% endblock content %}
+    <div class="wrapper">
+        <div class="footer">
+            <div class="links">
+                <ul>
+                    <li><a href="#">ABOUT US</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                © 2022
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+>>>>>>> 8aea2fa5b0619c8117d2507ab3eece609c63d4d1

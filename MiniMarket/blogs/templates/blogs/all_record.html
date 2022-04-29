@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'blogs/base.html' %}
 {% block content %}
 
@@ -47,4 +48,73 @@
     </div>
 </div>
 
+=======
+{% extends 'blogs/base.html' %}
+{% block content %}
+<div class="container p-4 offset-8">
+     <form name="sr" class="form-inline mt-2 mt-md-0" action="{% url 'blogs:all_record' %}" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search" name="search">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"></input>
+        <button class="btn btn-outline-success my-2 my-sm-0" onclick="sr.reset()">Reset</button>
+     </form>
+ </div>
+
+<div class="container">
+    <br>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs text-center" role="tablist">
+      <li class="nav-item" style="width:50%;height:50px">
+        <a class="nav-link" data-toggle="tab" href="#want">Want</a>
+      </li>
+      <li class="nav-item" style="width:50%;height:50px">
+        <a class="nav-link" data-toggle="tab" href="#offer">Offer</a>
+      </li>
+    </ul>
+  
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div id="want" class="container tab-pane fade">
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">WANT</th>
+                  <th scope="col">OFFER</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in want_list %}
+                <tr style="vertical-align: middle;">
+                    <td>{{ record.want }}</td>
+                    <td>{{ record.offer }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      <div id="offer" class="container tab-pane fade">
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">WANT</th>
+                  <th scope="col">OFFER</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in offer_list %}
+                <tr style="vertical-align: middle;">
+                    <td>{{ record.want }}</td>
+                    <td>{{ record.offer }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+<div class="p-5 mb-4 bg-light rounded-3" style="text-align:center">
+    <a class="btn btn-outline-info btn-lg" type="button" href="{% url 'blogs:new_want' %}" style="width:30%">我要求购</a>
+    <a class="btn btn-outline-warning btn-lg" type="button" href="{% url 'blogs:new_offer' %}" style="width:30%">我要换出</a>
+</div>
+
+>>>>>>> 8aea2fa5b0619c8117d2507ab3eece609c63d4d1
 {% endblock content %}
