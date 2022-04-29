@@ -69,6 +69,7 @@ class RegisterViewClass(View):
             next = None
         if form.is_valid():
             new_user = form.save()
+            login(request,new_user)
             return redirect(self.get_redirect_url(next))
         else:
             errors = {name:list(form.errors[name]) for name in form.errors}
