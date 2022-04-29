@@ -31,6 +31,27 @@ class Record(models.Model):
         SiteUser,
         on_delete=models.CASCADE,
     )
-    
+    is_active = models.BooleanField(
+        default=True,
+    )
+
     def __str__(self) -> str:
         return '想要：' + str(self.want)
+
+
+class Subscribe(models.Model):
+    record = models.ForeignKey(
+        Record,  
+        on_delete=models.CASCADE,
+    )
+    created_by = models.ForeignKey(
+        SiteUser,
+        on_delete=models.CASCADE,
+    )
+    create_time = models.DateTimeField(
+        auto_now_add=True,
+    )
+    comment = models.CharField(
+        max_length=100,
+        verbose_name="留言",
+    )
