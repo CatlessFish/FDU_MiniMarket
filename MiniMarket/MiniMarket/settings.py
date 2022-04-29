@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # 用户应用
     'accounts.apps.AccountsConfig',
     'blogs',
+    'bootstrap4',
 
     # bootstrap4
     'bootstrap4',
