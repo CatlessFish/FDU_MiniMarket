@@ -7,7 +7,7 @@ from .models import *
 class Want_form(ModelForm):
     class Meta:
         model = Record
-        fields = ['want', 'offer', 'note']
+        fields = ['want', 'offer', 'note',]
         help_texts = {
             'want': '你想要啥？',
             'offer': '你能提供什么？',

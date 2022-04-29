@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 *{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
 	outline: none;
 	list-style: none;
 	text-decoration: none;
@@ -160,7 +157,7 @@ body{
 }
 
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color:  rgb(212, 198, 219); /* Green */
     border: none;
     color: white;
     padding: 5px 122.5px;
@@ -176,6 +173,6 @@ body{
 }
 
 .button:hover {
-    background-color: #000000; /* Green */
+    background-color: #3b3f0998; /* Green */
     color: white;
 }
