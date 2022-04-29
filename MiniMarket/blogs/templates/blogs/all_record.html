@@ -1,80 +1,70 @@
-<<<<<<< HEAD
 {% extends 'blogs/base.html' %}
 {% block content %}
-<div class="row">
-    <div class="col">
-        <a class="btn btn-outline-success btn-block" href="{% url 'blogs:new_want' %}" style="width:50%;">我想要</a>
-    </div>
-    <div class="col">
-        <a class="btn btn-outline-info btn-block" href="{% url 'blogs:new_offer' %}" style="width:50%">我能出</a>
-    </div>
-</div>
-<table class="table">
-    <thead>
-        <tr>
-          <th scope="col">WANT</th>
-          <th scope="col">OFFER</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for record in record_list %}
-        <tr style="vertical-align: middle;">
-            <td>{{ record.want }}</td>
-            <td>{{ record.offer }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-=======
-{% extends 'blogs/base.html' %}
-{% block content %}
+</br>
+</br>
+<div class="container p-4 offset-8">
+     <form name="sr" class="form-inline mt-2 mt-md-0" action="{% url 'blogs:all_record' %}" method="get">
+        <input class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search" name="search">
+        <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search"></input>
+         <button class="btn btn-outline-success my-2 my-sm-0" onclick="sr.reset()">Reset</button>
+     </form>
+ </div>
 
 <div class="container">
-    {% for record in record_list %}
-        <div class="row">
-            {% if record.is_want == True %}
-                <div class="col">
-                    <h3 class="display-3">想要</h3>
-                </div>            
-                <div class="col">
-                    <p class="lead">Want:</p>
-                    <p>{{ record.want }}</p>
-                </div>            
-                <div class="col">
-                    <p class="lead">Offer:</p>
-                    <p>{{ record.offer }}</p>
-                </div>
-                <div class="col">
-                    <a href="#" class="btn btn-sm btn-primary">详情</a>
-                </div>           
-            {% else %}
-                <div class="col">
-                    <h1 class="display-1">想出</h1>
-                </div>
-                <div class="col">
-                    <p class="lead">Offer:</p>
-                    <p>{{ record.offer }}</p>
-                </div>
-                <div class="col">
-                    <p class="lead">Want:</p>
-                    <p>{{ record.want }}</p>
-                </div>
-                <div class="col">
-                    <a href="#" class="btn btn-sm btn-primary">详情</a>
-                </div>
-            {% endif %}
-        </div>
-    {% endfor %}
-    <div class="row">
-        <div class="col">
-            <a class="btn btn-outline-success btn-block" href="{% url 'blogs:new_want' %}">我想要</a>
-        </div>
-        <div class="col">
-            <a class="btn btn-outline-info btn-block" href="{% url 'blogs:new_offer' %}">我能出</a>
-        </div>
-    </div>
+    <br>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs text-center" role="tablist">
+      <li class="nav-item" style="width:50%;">
+        <a class="nav-link" data-toggle="tab" href="#want">Want</a>
+      </li>
+      <li class="nav-item" style="width:50%">
+        <a class="nav-link" data-toggle="tab" href="#offer">Offer</a>
+      </li>
+    </ul>
+  
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div id="want" class="container tab-pane fade"><br>
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">WANT</th>
+                  <th scope="col">OFFER</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in record_list %}
+                <tr style="vertical-align: middle;">
+                    <td>{{ record.want }}</td>
+                    <td>{{ record.offer }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      <div id="offer" class="container tab-pane fade"><br>
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">WANT</th>
+                  <th scope="col">OFFER</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in record_list %}
+                <tr style="vertical-align: middle;">
+                    <td>{{ record.want }}</td>
+                    <td>{{ record.offer }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+  </div>
+
+<div class="p-5 mb-4 bg-light rounded-3">
+        <a class="btn btn-info btn-lg" type="button" href="{% url 'blogs:new_want' %}" >我想要</a>
+        <a class="btn btn-warning btn-lg" type="button" href="{% url 'blogs:new_offer' %}">我能出</a>
 </div>
 
->>>>>>> 9b2841e38c8b569a70ee38ab065b125e5182fe29
 {% endblock content %}
