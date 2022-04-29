@@ -31,6 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 用户应用
+    'accounts.apps.AccountsConfig',
+
+    # bootstrap4
+    'bootstrap4',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,9 +82,9 @@ WSGI_APPLICATION = 'MiniMarket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'django',
+        'NAME': 'minimarket',
+        'USER': 'minimarket',
+        'PASSWORD': 'minimarket',
         'HOST': 'catlessfish.cc', # 留空表示localhost
         'PORT': '5432',
     }
@@ -125,3 +131,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# User Model
+
+AUTH_USER_MODEL = 'accounts.SiteUser'
