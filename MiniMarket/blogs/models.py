@@ -54,4 +54,5 @@ class Subscribe(models.Model):
     comment = models.CharField(
         max_length=100,
         verbose_name="留言",
+        blank=True,
     )

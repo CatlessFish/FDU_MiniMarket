@@ -25,12 +25,23 @@ class DetailView(View):
         if record_id is None:
             return HttpResponseNotFound()
         record = Record.objects.get(id=record_id)
-        # comments = ...
-        return render(request, template,
-            context={'record': record})
+        try:
+            Subscribe.objects.get(record=record, created_by=request.user)
+            interested = True
+        except Subscribe.DoesNotExist:
+            interested = False
+        return render(request, self.template,
+            context={'record': record, 'record_id': record_id, 'interested':interested})
 
     def post(self, request, record_id=None):
-        ...
+        form = forms.Form(request.POST)
+        user_id = form.data.get('user_id')
+        rec_id = form.data.get('record_id')
+        user = SiteUser.objects.get(id = int(user_id))
+        record = Record.objects.get(id = int(rec_id))
+        sub = Subscribe(created_by=user, record=record)
+        sub.save()
+        return redirect('detail/'+str(rec_id)+'/')
 
 
 

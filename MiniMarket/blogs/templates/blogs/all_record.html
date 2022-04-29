@@ -22,42 +22,52 @@
   
     <!-- Tab panes -->
     <div class="tab-content">
-      <div id="want" class="container tab-pane fade">
-        <table class="table">
-            <thead>
-                <tr>
-                  <th scope="col">WANT</th>
-                  <th scope="col">OFFER</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in want_list %}
-                <tr style="vertical-align: middle;">
-                    <td>{{ record.want }}</td>
-                    <td>{{ record.offer }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-      </div>
-      <div id="offer" class="container tab-pane fade">
-        <table class="table">
-            <thead>
-                <tr>
-                  <th scope="col">WANT</th>
-                  <th scope="col">OFFER</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for record in offer_list %}
-                <tr style="vertical-align: middle;">
-                    <td>{{ record.want }}</td>
-                    <td>{{ record.offer }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-      </div>
+        <div id="want" class="container tab-pane fade">
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">WANT</th>
+                    <th scope="col">OFFER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in want_list %}
+                    <tr style="vertical-align: middle;">
+                        <td>{{ record.want }}</td>
+                        <td>{{ record.offer }}</td>
+                        <td>
+                            <a href="{% url 'blogs:detail' record.id %}" class="btn btn-outline-primary">
+                                查看详情
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="offer" class="container tab-pane fade">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">WANT</th>
+                        <th scope="col">OFFER</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in offer_list %}
+                    <tr style="vertical-align: middle;">
+                        <td>{{ record.want }}</td>
+                        <td>{{ record.offer }}</td>
+                        <td>
+                            <a href="{% url 'blogs:detail' record.id %}" class="btn btn-outline-primary">
+                                查看详情
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 <div class="p-5 mb-4 bg-light rounded-3" style="text-align:center">
