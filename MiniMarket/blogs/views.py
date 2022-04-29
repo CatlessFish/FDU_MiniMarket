@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django import forms
+from accounts.models import SiteUser
 
 from .models import *
 from .forms import *
@@ -61,7 +62,7 @@ class NewWantView(View):
     Create a new Want-Record
     """
     template = 'blogs/new_want.html' # 使用的模板
-    success_redirect = '/' # 成功时重定向地址
+    success_redirect = 'blogs:all_record' # 成功时重定向地址
 
     def get(self, request):
         form = Want_form()
@@ -70,33 +71,34 @@ class NewWantView(View):
             
     def post(self, request):
         form = Want_form(request.POST)
-        if form.is_valid():
-            new_want = form.save()
-            return redirect(self.success_redirect)
-        else:
-            errors = {name:list(form.errors[name]) for name in form.errors}
-            return render(request, self.template_name,
-                context={'form': form, 'errors': errors})
-
+        user_id = form.data.get('user_id')
+        want = form.data.get('want')
+        offer = form.data.get('offer')
+        note = form.data.get('note')
+        user = SiteUser.objects.get(id = user_id)
+        record = Record(is_want=1, want=want, offer=offer, note=note, created_by=user)
+        record.save()
+        return redirect(self.success_redirect)
 
 class NewOfferView(View):
     """
     Create a new Offer-Record
     """
     template = 'blogs/new_offer.html' # 使用的模板
-    success_redirect = '/' # 成功时重定向地址
+    success_redirect = 'blogs:all_record' # 成功时重定向地址
 
     def get(self, request):
-        form = Offer_form()
+        form = Want_form()
         return render(request, self.template,
             context={'form': form})
             
     def post(self, request):
-        form = Offer_form(request.POST)
-        if form.is_valid():
-            new_want = form.save()
-            return redirect(self.success_redirect)
-        else:
-            errors = {name:list(form.errors[name]) for name in form.errors}
-            return render(request, self.template_name,
-                context={'form': form, 'errors': errors})
+        form = Want_form(request.POST)
+        user_id = form.data.get('user_id')
+        want = form.data.get('want')
+        offer = form.data.get('offer')
+        note = form.data.get('note')
+        user = SiteUser.objects.get(id = user_id)
+        record = Record(is_want=0, want=want, offer=offer, note=note, created_by=user)
+        record.save()
+        return redirect(self.success_redirect)

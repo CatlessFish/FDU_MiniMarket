@@ -2,12 +2,36 @@
 
 {% block content %}
 
-<div class="container">
-    <form action="{% url 'blogs:new_want' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button class="btn btn-primary p-2" type="submit">提交</button>
-    </form>
+
+<div class="wrapper">
+    <div class="header">
+        <div class="top">
+            <div class="logo">
+                <img src="/static/imgs/445.png" alt="#" style="width: 75px;">
+            </div>
+            <div class="form">
+                <form method="post" action="{% url 'blogs:new_offer' %}">
+                {% csrf_token %}
+                <div class="input_field">
+                    <input type="text" name="offer" placeholder="你想出的货：" required>
+                </div>
+                <div class="input_field">
+                    <input type="text" name="want" placeholder="你想要啥？" required>
+                </div>
+                <div class="input_field">
+                    <input type="text" name="note" placeholder="备注：" required>
+                </div>
+                <div class="input_field">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                </div>
+                {% if error_msg %}
+                <p class="warning">{{ error_msg }}</p>
+                {% endif %}
+                <input type="submit" value="创建" class="button">
+                <input type="hidden" name="next" value="{% url 'blogs:all_record' %}"/>
+                </form>
+            </div>
+    </div>
 </div>
 
 {% endblock content %}
