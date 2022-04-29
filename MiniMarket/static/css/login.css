@@ -26,7 +26,7 @@ body{
 .wrapper .signup{
 	background: #fff;
     border: 1px solid #e6e6e6;
-    border-radius: 1px;
+    border-radius: 20px;
     padding: 40px 40px 20px;
 }
 
@@ -41,7 +41,7 @@ body{
 	background: #fafafa;
 	border: 1px solid #efefef;
 	font-size: 12px;
-	border-radius: 3px;
+	border-radius: 8px;
 	color: #262626;
 	padding: 10px;
 }
