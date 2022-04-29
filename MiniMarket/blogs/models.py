@@ -1,7 +1,5 @@
 from django.db import models
 
-from accounts.models import SiteUser
-
 # Create your models here.
 
 class Record(models.Model):
@@ -27,10 +25,5 @@ class Record(models.Model):
     update_time = models.DateTimeField(
         auto_now=True,
     )
-    created_by = models.ForeignKey(
-        SiteUser,
-        on_delete=models.CASCADE,
-    )
-    
     def __str__(self) -> str:
         return '想要：' + str(self.want)
