@@ -15,7 +15,7 @@ class Want_form(ModelForm):
         }
 
     def save(self, commit=True):
-        record = super.save(commit=False)
+        record = super().save(commit=False)
         record.is_want = True
         if commit:
             record.save()
@@ -33,7 +33,7 @@ class Offer_form(ModelForm):
         }
 
     def save(self, commit=True):
-        record = super.save(commit=False)
+        record = super().save(commit=False)
         record.is_want = False
         if commit:
             record.save()

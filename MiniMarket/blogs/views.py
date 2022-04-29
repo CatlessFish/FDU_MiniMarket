@@ -16,14 +16,17 @@ def home(request):
     return render(request, 'blogs/home.html')
 
 
-class AllRecord(View):
+class AllRecordView(View):
     """
     List all records
     """
     template = 'blogs/all_record.html'
 
     def get(self, request):
-        ...
+        all_list = Record.objects.all()
+        selected_list = list(all_list)
+        return render(request, self.template,
+            context={'record_list': selected_list})
 
     def post(self, request):
         ...
