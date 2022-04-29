@@ -15,6 +15,7 @@ from .forms import *
 def home(request):
     return render(request, 'blogs/home.html')
 
+# TODO detail, search
 
 class AllRecordView(View):
     """
@@ -24,6 +25,7 @@ class AllRecordView(View):
 
     def get(self, request):
         all_list = Record.objects.all()
+        print(all_list)
         selected_list = list(all_list)
         return render(request, self.template,
             context={'record_list': selected_list})
