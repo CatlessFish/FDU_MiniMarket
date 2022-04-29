@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>图书销售管理系统</title>
+    <title>Minimarket</title>
 
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
@@ -14,11 +14,14 @@
 
 <body>
     <header>
-        <a href="{% url 'blogs:home' %}" style="text-decoration: none; color: black;font-family: 'ZCOOL KuaiLe', cursive;" ><strong>Minimarket</strong>|FDu</a>
+        
         <nav>
             <ul class="nav__links">
                 <li>
-                    <a href="{% url 'blogs:home' %}" style="text-decoration: none;">帖子</a>
+                    <a href="{% url 'blogs:home' %}" style="text-decoration: none; color: black;font-family: 'ZCOOL KuaiLe', cursive;" ><strong>Minimarket</strong>|FDu</a>
+                </li>
+                <li>
+                    <a href="{% url 'blogs:all_record' %}" style="text-decoration: none;">交易区</a>
                 </li>
             </ul>
         </nav>
@@ -27,25 +30,25 @@
             <ul class="nav__links">
             {% if user.is_authenticated %}
                 <li class="logo">
-                    <a href="#" style="text-decoration: none;">你好，{{ user.username }}. &emsp;</a>
+                    <a href="#" style="text-decoration: none;">你好，{{ user.nickname }}. &emsp;</a>
                 </li>
                 <li>
-                    <a href="#" style="text-decoration: none;">注销</a>
+                    <a href="{% url 'accounts:logout' %}" style="text-decoration: none;">注销</a>
                 </li>
             {% else %}
                 <li>
-                    <a href="#" style="text-decoration: none;">登录</a>
+                    <a href="{% url 'accounts:login' %}" style="text-decoration: none;">登录</a>
                 </li>
                 <li>
-                    <a href="#" style="text-decoration: none;">注册</a>
+                    <a href="{% url 'accounts:register' %}" style="text-decoration: none;">注册</a>
                 </li>
             {% endif %}
             </ul>
         </nav>
     </header>
     
-    {% block content %}
 
+    {% block content %}
     {% endblock content %}
     <div class="wrapper">
         <div class="footer">
