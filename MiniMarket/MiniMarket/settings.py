@@ -34,6 +34,10 @@ INSTALLED_APPS = [
     # 用户应用
     'accounts.apps.AccountsConfig',
     'blogs',
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8505d1907906ccbf26345d9832f6834d95f7836f
 
     # bootstrap4
     'bootstrap4',
