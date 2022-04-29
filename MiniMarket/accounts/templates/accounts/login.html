@@ -1,0 +1,49 @@
+{% extends "blogs/base.html" %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="header">
+            <div class="top">
+                <div class="logo">
+                    <img src="/static/imgs/login.png" alt="#" style="width: 75px;">
+                </div>
+                <div class="form">
+                    <form method="post" action="{% url 'accounts:login' %}">
+                    {% csrf_token %}
+                    <div class="input_field">
+                        <input type="text" name="username" placeholder="用户名" required>
+                    </div>
+                    <div class="input_field">
+                        <input type="password" name="password" placeholder="密码" required>
+                    </div>
+                    {% if error_msg %}
+                    <p class="warning">{{ error_msg }}</p>
+                    {% endif %}
+                    <input type="submit" value="登录" class="button">
+                    <input type="hidden" name="next" value="{% url 'blogs:home' %}"/>
+                    </form>
+                </div>
+                <div class="or">
+                    <div class="line"></div>
+                    <p>OR</p>
+                    <div class="line"></div>
+                </div>
+                <div class="dif">
+                    <div class="forgot">
+                        <a href="#">忘记密码？那我也没办法捏^ ^</a>
+                    </div>
+                </div>
+            </div>
+            <div class="signup">
+                <p>没有账号？</p>
+                <a href="#">注册</a>
+            </div>
+            <div class="apps">
+                <div class="icons">
+                    {% comment %} <a href="#"><img src="appstore.png" alt="appstore"></a> {% endcomment %}
+                    {% comment %} <a href="#"><img src="googleplay.png" alt="googleplay"></a> {% endcomment %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
