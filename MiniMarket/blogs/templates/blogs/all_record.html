@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'blogs/base.html' %}
 {% block content %}
 <div class="row">
@@ -25,4 +26,55 @@
     </tbody>
 </table>
 
+=======
+{% extends 'blogs/base.html' %}
+{% block content %}
+
+<div class="container">
+    {% for record in record_list %}
+        <div class="row">
+            {% if record.is_want == True %}
+                <div class="col">
+                    <h3 class="display-3">想要</h3>
+                </div>            
+                <div class="col">
+                    <p class="lead">Want:</p>
+                    <p>{{ record.want }}</p>
+                </div>            
+                <div class="col">
+                    <p class="lead">Offer:</p>
+                    <p>{{ record.offer }}</p>
+                </div>
+                <div class="col">
+                    <a href="#" class="btn btn-sm btn-primary">详情</a>
+                </div>           
+            {% else %}
+                <div class="col">
+                    <h1 class="display-1">想出</h1>
+                </div>
+                <div class="col">
+                    <p class="lead">Offer:</p>
+                    <p>{{ record.offer }}</p>
+                </div>
+                <div class="col">
+                    <p class="lead">Want:</p>
+                    <p>{{ record.want }}</p>
+                </div>
+                <div class="col">
+                    <a href="#" class="btn btn-sm btn-primary">详情</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-outline-success btn-block" href="{% url 'blogs:new_want' %}">我想要</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-outline-info btn-block" href="{% url 'blogs:new_offer' %}">我能出</a>
+        </div>
+    </div>
+</div>
+
+>>>>>>> 9b2841e38c8b569a70ee38ab065b125e5182fe29
 {% endblock content %}
