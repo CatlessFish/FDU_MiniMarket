@@ -35,6 +35,10 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'blogs',
 
+<<<<<<< HEAD
+=======
+    # bootstrap4
+>>>>>>> ca408531bf0a4c7919081ce4ff30044be1ebfb95
     'bootstrap4',
 
     'django.contrib.admin',
