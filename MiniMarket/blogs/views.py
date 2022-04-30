@@ -42,8 +42,9 @@ class DetailView(View):
         record = Record.objects.get(id = int(rec_id))
         sub = Subscribe(created_by=user, record=record)
         sub.save()
-        return redirect('detail/'+str(rec_id)+'/')
+        return redirect('/detail/'+str(rec_id)+'/')
 
+#TODO 取消感兴趣 删帖 右对齐 tab自动激活
 
 
 @method_decorator(login_required(login_url='/accounts/login'), name='dispatch')
@@ -62,7 +63,7 @@ class AllRecordView(View):
             want_list = list(Record.objects.filter(is_want=True, want__icontains=srch))
             offer_list = list(Record.objects.filter(is_want=False, offer__icontains=srch))
         return render(request, self.template,
-            context={'want_list': want_list, 'offer_list': offer_list})
+            context={'want_list': want_list, 'offer_list': offer_list, 'srch': srch})
 
     def post(self, request):
         ...
