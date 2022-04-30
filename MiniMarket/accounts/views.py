@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_view
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
+
+from blogs.models import Record
 from .forms import *    
 
 # Create your views here.
@@ -47,6 +49,7 @@ class LoginViewClass(View):
         else:
             return str(next)
 
+
 class RegisterViewClass(View):
     """
     Class-based view for user register
@@ -85,6 +88,7 @@ class RegisterViewClass(View):
         else:
             return str(next)
 
+@method_decorator(login_required(login_url='/accounts/login/'), name='dispatch')
 class UserinfoViewClass(View):
     template = 'accounts/userinfo.html'
     redirect_authenticated_user = True
@@ -92,9 +96,15 @@ class UserinfoViewClass(View):
     def get(self, request):
         user = request.user
         form = UserChangeForm(instance=user)
-        print(form)
         next = request.GET.get("next")
-        return render(request, self.template, {'form': form, 'next': next})
+
+        my_record = Record.objects.filter(created_by=user)
+        record_list = list(my_record)
+        my_interest = Record.objects.filter(subscribe__created_by=user)
+        interest_list = list(my_interest)
+
+        return render(request, self.template, 
+            context={'form': form, 'next': next, 'record_list': record_list, 'interest_list': interest_list})
 
     def post(self, request):
         user = request.user
@@ -118,3 +128,8 @@ class UserinfoViewClass(View):
             return '/'
         else:
             return str(next)
+
+
+class LogoutViewClass(auth_view.LogoutView):
+    def get_next_page(self):
+        return '/'  

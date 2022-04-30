@@ -1,78 +1,179 @@
 {% extends "blogs/base.html" %}
 {% block content %}
-{% if user.is_authenticated %}
-<!-- this form is for submitting the change information -->
 {% load static %}
 <div class="container">
-    <div class="row mt-5">
-        <div class="col-sm-5"></div>
-        <div class="col-sm-2">
-            <img  src="/static/imgs/446.png" class="img-fluid img-thumbnail full-width" style="width: 250px;">
+    <br>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" style="height:50px">
+            <a class="nav-link active" data-toggle="tab" href="#my_info">个人资料</a>
+        </li>
+        <li class="nav-item" style="height:50px">
+            <a class="nav-link" data-toggle="tab" href="#my_record">我发起的</a>
+        </li>
+        <li class="nav-item" style="height:50px">
+            <a class="nav-link" data-toggle="tab" href="#my_interest">我感兴趣的</a>
+        </li>
+    </ul>
+  
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="my_info" class="container tab-pane active"><br>
+            <!-- this form is for submitting the change information -->
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <img  src="/static/imgs/446.png" class="img-fluid img-thumbnail full-width" style="width: 250px;">
+                    </div>
+                </div>  
+            </div>
+            <form action="{% url 'accounts:userinfo' %}" method="POST">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="row mt-5">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4">属性</th>
+                                    <th class="col-sm-4">信息</th>
+                                    <th class="col-sm-4">编辑</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="row">账户</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>
+                                        <div class="input_field">
+                                            <input type="text" name="nickname" value="账户不可修改" disabled > 
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">昵称</td>
+                                    <td>{{ user.nickname }}</td>
+                                    <td>
+                                        <input type="text" name="nickname" value="{{ user.nickname }}" class="input_field"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">楼号</td>
+                                    <td>{{ user.building_no }}</td>
+                                    <td>
+                                        <input type="text" name="building_no" value="{{ user.building_no }}" class="input_field">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">寝室号</td>
+                                    <td>{{ user.room_no }}</td>
+                                    <td>
+                                        <input type="text" name="room_no" value="{{ user.room_no }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td scope="row">联系方式</td>
+                                    <td>{{ user.contact }}</td>
+                                    <td>
+                                        <input type="text" name="contact" value="{{ user.contact }}" style="height=40px;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8"></div>
+                        <div class="col-sm-2">
+                            <input type="submit" value="修改" class="button2">
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-    </div>  
-</div>
-<form action="{% url 'accounts:userinfo' %}" method="POST">
-    {% csrf_token %}
-    <div class="container">
-        <div class="row mt-5">
-            <table class="table">
+        <div id="my_record" class="container tab-pane fade"><br>
+            <table class="table table-hover text-center">
                 <thead>
                     <tr>
-                        <th class="col-sm-4">属性</th>
-                        <th class="col-sm-4">信息</th>
-                        <th class="col-sm-4">编辑</th>
+                        <th scope="col"><span class="lead font-weight-bold">类型</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">想要</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">提供</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">感兴趣人数</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">状态</span></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td scope="row">账户</td>
-                        <td>{{ user.username }}</td>
+                    {% for record in record_list %}
+                    <tr style="vertical-align: middle;">
                         <td>
-                            <div class="input_field">
-                                <input type="text" name="nickname" value="账户不可修改" disabled > 
-                            </div>
+                            {% if record.is_want == True %}
+                            求购
+                            {% else %}
+                            换出
+                            {% endif %}
+                        </td>
+                        <td>{{ record.want }}</td>
+                        <td>{{ record.offer }}</td>
+                        <td>{{ record.subscribe_set.all.count }}</td>
+                        <td>
+                            {% if record.is_active == True %}
+                            活跃
+                            {% else %}
+                            已下架
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'blogs:detail' record.id %}" class="btn btn-outline-primary">
+                                查看详情
+                            </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td scope="row">昵称</td>
-                        <td>{{ user.nickname }}</td>
-                        <td>
-                            <input type="text" name="nickname" value="{{ user.nickname }}" class="input_field"> 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">楼号</td>
-                        <td>{{ user.building_no }}</td>
-                        <td>
-                            <input type="text" name="building_no" value="{{ user.building_no }}" class="input_field">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">寝室号</td>
-                        <td>{{ user.room_no }}</td>
-                        <td>
-                            <input type="text" name="room_no" value="{{ user.room_no }}">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="row">联系方式</td>
-                        <td>{{ user.contact }}</td>
-                        <td>
-                            <input type="text" name="contact" value="{{ user.contact }}" style="height=40px;">
-                        </td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <div class="col-sm-8"></div>
-            <div class="col-sm-2">
-                <input type="submit" value="修改" class="button2">
-            </div>
+        <div id="my_interest" class="container tab-pane fade"><br>
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="lead font-weight-bold">类型</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">想要</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">提供</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">状态</span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in interest_list %}
+                    <tr style="vertical-align: middle;">
+                        <td>
+                            {% if record.is_want == True %}
+                            求购
+                            {% else %}
+                            换出
+                            {% endif %}
+                        </td>
+                        <td>{{ record.want }}</td>
+                        <td>{{ record.offer }}</td>
+                        <td>
+                            {% if record.is_active == True %}
+                            活跃
+                            {% else %}
+                            已下架
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'blogs:detail' record.id %}" class="btn btn-outline-primary">
+                                查看详情
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-</form>
-{% endif %}
+
 {% endblock content %}
 
 {% block script %}
