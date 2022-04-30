@@ -1,5 +1,4 @@
 from django.db import models
-
 from accounts.models import SiteUser
 
 # Create your models here.
@@ -54,4 +53,5 @@ class Subscribe(models.Model):
     comment = models.CharField(
         max_length=100,
         verbose_name="留言",
+        blank=True,
     )
