@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-    <form action="{% url 'blogs:new_want' %}" method="post">
+    <form action="{% url 'blogs:new_offer' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <button class="btn btn-primary p-2" type="submit">提交</button>
