@@ -14,16 +14,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="font-weight-bold">求购</span></td>
-                        <td>{{ record.want }}</td>
+                        <td><span class="font-weight-bold lead">求购</span></td>
+                        <td><span class="lead">{{ record.want }}</span></td>
                     </tr>
                     <tr>
-                        <td><span class="font-weight-bold">提供</span></td>
-                        <td>{{ record.offer }}</td>
+                        <td><span class="font-weight-bold lead">提供</span></td>
+                        <td><span class="lead">{{ record.offer }}</span></td>
                     </tr>
                     <tr>
-                        <td><span class="font-weight-bold">备注</span></td>
-                        <td>{{ record.note }}</td>
+                        <td><span class="font-weight-bold lead">备注</span></td>
+                        <td><span class="lead">{{ record.note }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -32,21 +32,19 @@
         <div class="container">
             <table class="table text-center">
                 <thead>
-                    <th></th>
-                    <th></th>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="font-weight-bold">出售</span></td>
-                        <td>{{ record.offer }}</td>
+                        <td><span class="font-weight-bold lead">出售</span></td>
+                        <td><span class="lead">{{ record.offer }}</span></td>
                     </tr>
                     <tr>
-                        <td><span class="font-weight-bold">想要</span></td>
-                        <td>{{ record.want }}</td>
+                        <td><span class="font-weight-bold lead">想要</span></td>
+                        <td><span class="lead">{{ record.want }}</span></td>
                     </tr>
                     <tr>
-                        <td><span class="font-weight-bold">备注</span></td>
-                        <td>{{ record.note }}</td>
+                        <td><span class="font-weight-bold lead">备注</span></td>
+                        <td><span class="lead">{{ record.note }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,28 +53,76 @@
     </div>
     <div class="card-footer">
         <div class="container" style="text-align:right;width:70%">
-            <p class="lead">此项需求由用户{{ user }}创建</p>
-            <p class="font-weight-bold text-primary">联系方式：{{ user.contact }}</p>
+            <p class="lead">更新于{{ record.update_time }}</p>
+            <p class="lead">此项需求由用户{{ record.created_by }}创建</p>
+            <p class="lead">地址：{{ record.created_by.building_no }}号楼{{ record.created_by.room_no }}</p>
+            <p class="font-weight-bold text-primary lead">联系方式：{{ record.created_by.contact }}</p>
         </div>
-        <div class="container" style="width: 70%">
+        <div class="container" style="width: 80%">
             <div class="row">
-                <div class="col"><a href="{% url 'blogs:all_record' %}" class="btn btn-outline-warning btn-block btn-lg">返回</a></div>
+                <div class="col"><a href="{% url 'blogs:all_record' %}" class="btn btn-outline-warning btn-block btn-lg">返回交易列表</a></div>
                 <div class="col">
-                    {% if interested == False %}
-                    <form action="{% url 'blogs:detail' record_id %}" method="post">
+                    <form action="{% url 'blogs:detail' record_id %}" method="post" class="form-inline">
                         {% csrf_token %}
                         <input type="hidden" name="user_id" value="{{ user.id }}">
                         <input type="hidden" name="record_id" value="{{ record_id }}">
-                        <button class="btn btn-outline-success btn-lg btn-block" type="submit">感兴趣</button>
+                        {% if user == record.created_by %}
+                            {% if record.is_active == True %}
+                                <input type="hidden" name="operation" value="close">
+                                <button class="btn btn-outline-danger btn-lg btn-block" type="submit">下架此条</button>
+                            {% else %}
+                                <input type="hidden" name="operation" value="reopen">
+                                <button class="btn btn-outline-info btn-lg btn-block" type="submit">重新上架</button>
+                            {% endif %}
+                        {% else %}
+                            {% if interested == False %}
+                                <div class="container">
+                                    <div class="row">
+                                        <input type="hidden" name="operation" value="subscribe">
+                                        <button class="btn btn-outline-success btn-lg btn-block" type="submit">感兴趣</button>
+                                    </div>
+                                    {% comment %} <div class="row p-2">
+                                        <input class="form-control" type="text" placeholder="留言（可选）" name="comment">                                       
+                                    </div> {% endcomment %}
+                                </div>
+                            {% else %}
+                                <input type="hidden" name="operation" value="unsubscribe">
+                                <button class="btn btn-info btn-lg btn-block" type="submit">不再感兴趣</button>
+                            {% endif %}
+                        {% endif %}
                     </form>
-                    {% else %}
-                    <button class="btn btn-success btn-lg btn-block" disabled>已感兴趣</button>
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+{% if record.created_by == user %}
+<div class="container p-3">
+    <h3>感兴趣的人</h3>
+</div>
+<div class="container">
+    <table class="table table-hover text-center">
+        <thead>
+            <tr>
+                <th scope="col"><span class="lead font-weight-bold">用户</span></th>
+                <th scope="col"><span class="lead font-weight-bold">地址</span></th>
+                <th scope="col"><span class="lead font-weight-bold">联系方式</span></th>
+                <th scope="col"><span class="lead font-weight-bold">留言</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subscription in subscription_list %}
+            <tr style="vertical-align: middle;">
+                <td>{{ subscription.created_by.nickname }}</td>
+                <td>{{ subscription.created_by.building_no }}#{{ subscription.room_no }}</td>
+                <td>{{ subscription.created_by.contact }}</td>
+                <td>{{ subscription.comment }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
 
 {% endblock content %}

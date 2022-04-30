@@ -13,21 +13,22 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs text-center" role="tablist">
       <li class="nav-item" style="width:50%;height:50px">
-        <a class="nav-link" data-toggle="tab" href="#want">Want</a>
+        <a class="nav-link active" data-toggle="tab" href="#want">求购</a>
       </li>
       <li class="nav-item" style="width:50%;height:50px">
-        <a class="nav-link" data-toggle="tab" href="#offer">Offer</a>
+        <a class="nav-link" data-toggle="tab" href="#offer">换出</a>
       </li>
     </ul>
   
     <!-- Tab panes -->
     <div class="tab-content">
-        <div id="want" class="container tab-pane fade">
-            <table class="table">
+        <div id="want" class="container tab-pane active">
+            <table class="table table-hover text-center">
                 <thead>
                     <tr>
-                    <th scope="col">WANT</th>
-                    <th scope="col">OFFER</th>
+                        <th scope="col"><span class="lead font-weight-bold">想要</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">提供</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">楼号</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,7 @@
                     <tr style="vertical-align: middle;">
                         <td>{{ record.want }}</td>
                         <td>{{ record.offer }}</td>
+                        <td>{{ record.created_by.building_no }}#</td>
                         <td>
                             <a href="{% url 'blogs:detail' record.id %}" class="btn btn-outline-primary">
                                 查看详情
@@ -46,18 +48,20 @@
             </table>
         </div>
         <div id="offer" class="container tab-pane fade">
-            <table class="table">
+            <table class="table table-hover text-center">
                 <thead>
                     <tr>
-                        <th scope="col">WANT</th>
-                        <th scope="col">OFFER</th>
+                        <th scope="col"><span class="lead font-weight-bold">提供</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">想要</span></th>
+                        <th scope="col"><span class="lead font-weight-bold">楼号</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for record in offer_list %}
                     <tr style="vertical-align: middle;">
-                        <td>{{ record.want }}</td>
                         <td>{{ record.offer }}</td>
+                        <td>{{ record.want }}</td>
+                        <td>{{ record.created_by.building_no }}#</td>
                         <td>
                             <a href="{% url 'blogs:detail' record.id %}" class="btn btn-outline-primary">
                                 查看详情

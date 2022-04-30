@@ -1,4 +1,3 @@
-from re import template
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -26,25 +25,43 @@ class DetailView(View):
         if record_id is None:
             return HttpResponseNotFound()
         record = Record.objects.get(id=record_id)
+        subscription_list = Subscribe.objects.filter(record=record)
         try:
             Subscribe.objects.get(record=record, created_by=request.user)
             interested = True
         except Subscribe.DoesNotExist:
             interested = False
         return render(request, self.template,
-            context={'record': record, 'record_id': record_id, 'interested':interested})
+            context={'record': record, 'record_id': record_id, 'interested':interested,
+            'subscription_list': subscription_list})
 
     def post(self, request, record_id=None):
         form = forms.Form(request.POST)
         user_id = form.data.get('user_id')
         rec_id = form.data.get('record_id')
+        comment = form.data.get('comment')
+        operation = form.data.get('operation')
+
         user = SiteUser.objects.get(id = int(user_id))
         record = Record.objects.get(id = int(rec_id))
-        sub = Subscribe(created_by=user, record=record)
-        sub.save()
+        if comment is None:
+            comment = ''
+        
+        if operation == 'subscribe':
+            sub = Subscribe(created_by=user, record=record, comment=comment)
+            sub.save()
+        elif operation == 'unsubscribe':
+            sub = Subscribe.objects.get(created_by=user, record=record)
+            sub.delete()
+        elif operation == 'close':
+            record.is_active = False
+            record.save()
+        elif operation == 'reopen':
+            record.is_active = True
+            record.save()
         return redirect('/detail/'+str(rec_id)+'/')
 
-#TODO 取消感兴趣 删帖 右对齐 tab自动激活
+#TODO  删帖
 
 
 @method_decorator(login_required(login_url='/accounts/login'), name='dispatch')
@@ -56,12 +73,14 @@ class AllRecordView(View):
 
     def get(self, request):
         srch = request.GET.get('search')
+        all_wants = Record.objects.filter(is_want=True, is_active=True)
+        all_offers = Record.objects.filter(is_want=False, is_active=True)
         if srch == '' or srch is None:
-            want_list = list(Record.objects.filter(is_want=True))
-            offer_list = list(Record.objects.filter(is_want=False))
+            want_list = list(all_wants)
+            offer_list = list(all_offers)
         else:
-            want_list = list(Record.objects.filter(is_want=True, want__icontains=srch))
-            offer_list = list(Record.objects.filter(is_want=False, offer__icontains=srch))
+            want_list = list(all_wants.filter(want__icontains=srch))
+            offer_list = list(all_offers.filter(offer__icontains=srch))
         return render(request, self.template,
             context={'want_list': want_list, 'offer_list': offer_list, 'srch': srch})
 
