@@ -61,8 +61,6 @@ class DetailView(View):
             record.save()
         return redirect('/detail/'+str(rec_id)+'/')
 
-#TODO  删帖
-
 
 @method_decorator(login_required(login_url='/accounts/login'), name='dispatch')
 class AllRecordView(View):
@@ -73,10 +71,22 @@ class AllRecordView(View):
 
     def get(self, request):
         srch = request.GET.get('search')
+        bno = request.GET.get('bno')
         all_wants = Record.objects.filter(is_want=1, is_active=True).order_by('-update_time')
         all_offers = Record.objects.filter(is_want=0, is_active=True).order_by('-update_time')
-        print(all_wants)
-        print(all_offers)
+
+        if bno =='' or bno is None:
+            pass
+        else:
+            try:
+                bno = int(bno)
+                all_wants = all_wants.filter(created_by__building_no=bno)
+                all_offers = all_offers.filter(created_by__building_no=bno)
+            except:
+                pass
+            
+        # print(all_wants)
+        # print(all_offers)
         if srch == '' or srch is None:
             want_list = list(all_wants)
             offer_list = list(all_offers)
