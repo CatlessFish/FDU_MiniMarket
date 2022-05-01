@@ -28,10 +28,11 @@ header{
 }
 
 strong{
-    font-size: 40px;
+    font-size: 35px;
     font-family: 'ZCOOL KuaiLe', cursive;
     color: rgb(61, 2, 88);
     transition: all 0.3 ease 0s;
+    margin-left: 0px;
 }
 
 strong:hover{
@@ -40,6 +41,7 @@ strong:hover{
 
 .logo{
     cursor:pointer;
+    margin-left: 0px;
 }
 
 .nav__links{

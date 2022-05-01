@@ -73,8 +73,10 @@ class AllRecordView(View):
 
     def get(self, request):
         srch = request.GET.get('search')
-        all_wants = Record.objects.filter(is_want=True, is_active=True)
-        all_offers = Record.objects.filter(is_want=False, is_active=True)
+        all_wants = Record.objects.filter(is_want=1, is_active=True).order_by('-update_time')
+        all_offers = Record.objects.filter(is_want=0, is_active=True).order_by('-update_time')
+        print(all_wants)
+        print(all_offers)
         if srch == '' or srch is None:
             want_list = list(all_wants)
             offer_list = list(all_offers)

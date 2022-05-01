@@ -32,7 +32,7 @@ body{
 	margin: 0 auto 35px;
 }
 
-.wrapper .header .form .input_field input{
+.wrapper .header .form .input_field input, textarea{
 	margin-bottom: 5px;
 	width: 100%;
 	background: #fafafa;
