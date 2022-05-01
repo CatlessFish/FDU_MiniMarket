@@ -86,7 +86,7 @@ DATABASES = {
                                 'NAME': 'minimarket',
                                         'USER': 'minimarket',
                                                 'PASSWORD': 'minimarket',
-                                                        'HOST': '',
+                                                        'HOST': 'catlessfish.cc',
                                                                 'PORT': '5432',
                                                                     }
             }
