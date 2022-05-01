@@ -133,3 +133,6 @@ class NewOfferView(View):
         record = Record(is_want=0, want=want, offer=offer, note=note, created_by=user)
         record.save()
         return redirect(self.success_redirect)
+
+def Aboutus(request):
+    return render(request, 'blogs/about.html')
