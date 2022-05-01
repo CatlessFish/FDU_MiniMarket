@@ -13,23 +13,24 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <ul class="nav__links">
-                <li>
-                    <a href="{% url 'blogs:home' %}" style="text-decoration: none; color: black;font-family: 'ZCOOL KuaiLe', cursive;" ><strong>Minimarket</strong>|FDu</a>
+        <nav class="navbar navbar-expand-md navbar-light ml-auto border" style="background-color: rgb(212, 198, 219);">
+            <ul class="nav__links mr-auto">
+                <li class="logo">
+                    <a href="{% url 'blogs:home' %}" style="font-size:10px; text-decoration: none; color: black;font-family: 'ZCOOL KuaiLe', cursive;" ><strong>Minimarket</strong>|FDu</a>
                 </li>
+            </ul>           
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse"  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="width:10px;"></span></button>
+                
+            <div class="collapse navbar-collapse" style="color: #86A4BE;" id="navbarCollapse">
+            <ul class="nav__links ml-auto">
                 <li>
                     <a href="{% url 'blogs:all_record' %}" style="text-decoration: none;">交易区</a>
                 </li>
-            </ul>
-        </nav>
-
-        <nav>
-            <ul class="nav__links">
             {% if user.is_authenticated %}
                 <li class="logo">
-                    <a href="{% url 'accounts:userinfo' %}" style="text-decoration: none;">你好，{{ user.nickname }}. &emsp;</a>
+                    <a href="{% url 'accounts:userinfo' %}" style="text-decoration: none;">你好，{{ user.nickname }}.</a>
                 </li>
                 <li>
                     <a href="{% url 'accounts:logout' %}" style="text-decoration: none;">注销</a>
@@ -43,8 +44,8 @@
                 </li>
             {% endif %}
             </ul>
+            </div>
         </nav>
-    </header>
     
 {% block content %}
 {% endblock content %}

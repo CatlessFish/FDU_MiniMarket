@@ -11,7 +11,7 @@
                     <form method="post" action="{% url 'accounts:login' %}">
                     {% csrf_token %}
                     <div class="input_field">
-                        <input type="text" name="username" placeholder="用户名" required autofocus>
+                        <input type="text" name="username" placeholder="账号" required autofocus>
                     </div>
                     <div class="input_field">
                         <input type="password" name="password" placeholder="密码" required>
@@ -36,7 +36,7 @@
             </div>
             <div class="signup">
                 <p>没有账号？</p>
-                <a href="#">注册</a>
+                <a href="{% url 'accounts:register' %}">注册</a>
             </div>
         </div>
     </div>
