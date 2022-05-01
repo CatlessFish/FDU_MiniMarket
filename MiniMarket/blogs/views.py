@@ -100,6 +100,7 @@ class AllRecordView(View):
         ...
 
 
+@method_decorator(login_required(login_url='/accounts/login'), name='dispatch')
 class NewWantView(View):
     """
     Create a new Want-Record
@@ -123,6 +124,8 @@ class NewWantView(View):
         record.save()
         return redirect(self.success_redirect)
 
+
+@method_decorator(login_required(login_url='/accounts/login'), name='dispatch')
 class NewOfferView(View):
     """
     Create a new Offer-Record
